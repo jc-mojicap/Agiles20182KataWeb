@@ -68,7 +68,7 @@ class FunctionalTest(TestCase):
         link.click()
 
         usuario = self.browser.find_element_by_id('username')
-        usuario.send_keys('jc.mojicap')
+        usuario.send_keys('jc.mojica')
 
         contrasena = self.browser.find_element_by_id('password')
         contrasena.send_keys('password')
@@ -78,6 +78,6 @@ class FunctionalTest(TestCase):
 
         self.browser.implicitly_wait(3)
 
-        span2 = self.browser.find_element(By.XPATH, '//span[text()="Bienvenido(a) Juan Camilo"]')
+        span = self.browser.find_element(By.XPATH, '//span[text()="Bienvenido(a) Juan Camilo"]')
 
-        self.assertIn('Bienvenido(a) Juan Camilo', span2.text)
+        self.assertIn('Bienvenido(a) Juan Camilo', span.text)

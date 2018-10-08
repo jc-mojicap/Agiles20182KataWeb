@@ -7,11 +7,14 @@
 <body>
     <ul class="nav navbar-nav navbar-right" style="padding-right: 20px">
         <li><a href="{% url 'principal:registro' %}" id="id_register"><span class="glyphicon glyphicon-user"></span> Registrarse</a></li>
-        <li><a href="#" id="id_login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li> <a href="{% url 'principal:login' %}" id="id_login"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
     </ul>
     <div class="jumbotron" style="padding-left: 20px; height: 50%">
         <h1>Busco Ayuda</h1>
         <p>Encuentra aquí la ayuda que necesitas.</p>
+        {% if user.is_authenticated %}
+        <span>Bienvenido(a) {{ user.first_name }}</span>
+        {% endif %}
         <div id="trabajadores">
             {% for trabajador in trabajadores %}
             <div class="col-sm-4 col-md-3">

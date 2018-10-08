@@ -3,6 +3,7 @@ import datetime
 
 import boto
 from django.conf import settings
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import HttpResponseRedirect, HttpResponse
@@ -25,19 +26,6 @@ def index(request):
     context = {'trabajadores': trabajadores, 'tipos_de_servicios': tipos_de_servicios,
                'form_trabajador': form_trabajador, 'form_usuario': form_usuario, 'base_url': settings.STATIC_URL}
     return render(request, 'polls/index.html', context)
-
-
-def login(request):
-    username = request.POST.get('usrname', '')
-    password = request.POST.get('psw', '')
-    user = auth.authenticate(username=username, password=password)
-    if user is not None:
-        auth.login(request, user)
-        messages.success(request, "Bienvenido al sistema {}".format(username), extra_tags="alert-success")
-        return HttpResponseRedirect('/')
-    else:
-        messages.error(request, "¡El usuario o la contraseña son incorrectos!", extra_tags="alert-danger")
-        return HttpResponseRedirect('/')
 
 
 def logout(request):
@@ -161,3 +149,24 @@ def registerTrabajador(request):
         form_trabajador = registroTrabajadorForm()
         form_usuario = UserForm()
     return render(request, 'polls/registro.html ', {'form_trabajador': form_trabajador, 'form_usuario': form_usuario})
+
+
+def login_view(request):
+
+    if request.user.is_authenticated():
+        # return redirect(reverse('media1:index'))
+        return render(request, "polls/index.html")
+
+    mensaje = ''
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # return redirect(reverse('media1:index'))
+            return render(request, "polls/index.html")
+        else:
+            mensaje = 'Credenciales de acceso incorrectas'
+
+    return render(request, 'polls/login.html', {'mensaje': mensaje})
