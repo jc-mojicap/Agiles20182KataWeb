@@ -20,7 +20,7 @@
                         <span style="color: white; font-size: large;">{{ trabajador.tiposDeServicio.nombre }}</span>
                     </div>
                     <div class="panel-body" style="text-align: center">
-                        <a class="trabajador" href="#" data-form="{{ trabajador.id }}" style="text-decoration: none;">
+                        <a class="trabajador" href="{% url 'principal:detalle' id=trabajador.id %}" data-form="{{ trabajador.id }}" style="text-decoration: none;">
                             <!--suppress HtmlUnknownTarget -->
                             <img class="thumbnail img-responsive center-block"
                             src="/media/{{ trabajador.imagen }}" width="100" height="100">

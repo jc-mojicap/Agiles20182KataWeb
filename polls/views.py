@@ -124,8 +124,11 @@ def getTiposDeServicio(request, pk):
     tipo = TiposDeServicio.objects.get(pk=pk)
     return HttpResponse(serializers.serialize("json", [tipo]))
 
-def detalle_trabajador(request):
-    return render(request, "polls/detalle.html")
+
+def detalle_trabajador(request, id):
+    trabajador = get_object_or_404(Trabajador, pk=id)
+    params = {'trabajador': trabajador}
+    return render(request, "polls/detalle.html", params)
 
 
 def detail(request, pk):

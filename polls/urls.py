@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^register', views.registerTrabajador, name='registro'),
     url(r'^logout$', views.logout),
     url(r'^trabajador/(?P<pk>\d+)$', views.detail),
-    url(r'^detail', views.detalle_trabajador),
+    url(r'^detail/(?P<id>\d+)/$', views.detalle_trabajador, name='detalle'),
     url(r'^addComment', views.add_comment),
     url(r'^mostrarComentarios/(?P<idTrabajador>\d+)$', views.mostrarComentarios),
     url(r'^mostrarTrabajadores/(?P<tipo>\w+)$', views.mostrarTrabajadores),
