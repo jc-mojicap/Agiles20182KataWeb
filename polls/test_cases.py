@@ -87,18 +87,23 @@ class FunctionalTest(TestCase):
         link = self.browser.find_element_by_id('id_editar')
         link.click()
         nombre = self.browser.find_element_by_id('id_nombre')
+        nombre.clear()
         nombre.send_keys('Juan Camilo')
 
         apellidos = self.browser.find_element_by_id('id_apellidos')
+        apellidos.clear()
         apellidos.send_keys('Mojica')
 
         telefono = self.browser.find_element_by_id('id_telefono')
+        telefono.clear()
         telefono.send_keys('5554321')
 
         correo = self.browser.find_element_by_id('id_correo')
+        correo.clear()
         correo.send_keys('jc.mojicap@uniandes.edu.co')
 
         experiencia = self.browser.find_element_by_id('id_aniosExperiencia')
+        experiencia.clear()
         experiencia.send_keys('3')
 
         self.browser.find_element_by_xpath(
@@ -106,12 +111,6 @@ class FunctionalTest(TestCase):
 
         imagen = self.browser.find_element_by_id('id_imagen')
         imagen.send_keys('D:\\POL03.png')
-
-        nombreUsuario = self.browser.find_element_by_id('id_username')
-        nombreUsuario.send_keys('jc.mojica')
-
-        clave = self.browser.find_element_by_id('id_password')
-        clave.send_keys('password')
 
         botonGrabar = self.browser.find_element_by_id('id_grabar')
         botonGrabar.click()

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar trabajador</title>
+</head>
+<body>
+    <form action="{% url 'principal:editar' id=1 %}" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{ form_trabajador.as_p }}
+        {{ form_usuario.as_p }}
+        <input id="id_grabar" type="submit" value="Editar"/>
+    </form>
+</body>
+</html>

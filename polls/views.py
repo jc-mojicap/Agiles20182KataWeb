@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Trabajador, TrabajadorForm, UserForm, Comentario, registroTrabajadorForm
+from .models import Trabajador, TrabajadorForm, UserForm, Comentario, registroTrabajadorForm, TrabajadorEditForm
 from .models import TiposDeServicio
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
@@ -45,8 +45,6 @@ def register(request):
         user.email = request.POST.get('correo')
         user.save()
 
-
-
         nuevo_trabajador=Trabajador(nombre=request.POST['nombre'],
                                       apellidos=request.POST['apellidos'],
                                       aniosExperiencia=request.POST.get('aniosExperiencia'),
@@ -59,26 +57,25 @@ def register(request):
 
     return HttpResponseRedirect('/')
 
-# ------------------------
 
-
-
-# --------------------------
-
-def editar_perfil(request,idTrabajador):
-    trabajador=Trabajador.objects.get(usuarioId=idTrabajador)
+def editar_perfil(request, id):
+    print '------------ dentro de editar usuario ------------'
+    trabajador=Trabajador.objects.get(usuarioId=id)
     if request.method == 'POST':
         # formulario enviado
-        form_trabajador = TrabajadorForm(request.POST, request.FILES, instance=trabajador)
+        form_trabajador = TrabajadorEditForm(request.POST, request.FILES, instance=trabajador)
 
         if form_trabajador.is_valid():
+            print '------------ formulario valido ------------'
             # formulario validado correctamente
             form_trabajador.save()
+            print '------------ redireccionando ------------'
             return HttpResponseRedirect('/')
 
     else:
+        print '------------ formulario para actualizar ------------'
         # formulario inicial
-        form_trabajador = TrabajadorForm(instance=trabajador)
+        form_trabajador = TrabajadorEditForm(instance=trabajador)
 
     context = {'form_trabajador': form_trabajador}
     return render(request, 'polls/editar.html', context)
