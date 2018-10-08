@@ -40,7 +40,7 @@ class FunctionalTest(TestCase):
             "//select[@id='id_tiposDeServicio']/option[text()='Desarrollador']").click()
 
         imagen = self.browser.find_element_by_id('id_imagen')
-        imagen.send_keys('/imagenes/POL03.png')
+        imagen.send_keys('D:\\POL03.png')
 
         nombreUsuario = self.browser.find_element_by_id('id_username')
         nombreUsuario.send_keys('jc.mojica')

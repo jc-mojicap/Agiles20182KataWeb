@@ -131,3 +131,30 @@ def detalle_trabajador(request):
 def detail(request, pk):
     trabajador = get_object_or_404(Trabajador, pk=pk)
     return HttpResponse(serializers.serialize("json", [trabajador]))
+
+
+def registerTrabajador(request):
+    if request.method == 'POST':
+        form = registroTrabajadorForm(request.POST, request.FILES)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = User.objects.create_user(username=username, password=password)
+        user.first_name = request.POST.get('nombre')
+        user.last_name = request.POST.get('apellidos')
+        user.email = request.POST.get('correo')
+        user.save()
+        nuevo_trabajador = Trabajador(nombre=request.POST['nombre'],
+                                      apellidos=request.POST['apellidos'],
+                                      aniosExperiencia=request.POST.get('aniosExperiencia'),
+                                      tiposDeServicio=TiposDeServicio.objects.get(
+                                          pk=request.POST.get('tiposDeServicio')),
+                                      telefono=request.POST.get('telefono'),
+                                      correo=request.POST.get('correo'),
+                                      imagen=request.FILES['imagen'],
+                                      usuarioId=user)
+        nuevo_trabajador.save()
+        return HttpResponseRedirect(reverse('principal:index'))
+    else:
+        form_trabajador = registroTrabajadorForm()
+        form_usuario = UserForm()
+    return render(request, 'polls/registro.html ', {'form_trabajador': form_trabajador, 'form_usuario': form_usuario})
